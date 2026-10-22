@@ -1,4 +1,4 @@
-# Sac — Interactive Chess Openings & Gambits Trainer
+# Sac - Interactive Chess Openings & Gambits Trainer
 
 An interactive, modern chess trainer designed to help players master classical openings, sharp gambits, tactical sacrifices, and master-level continuations.
 
