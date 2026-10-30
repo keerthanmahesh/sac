@@ -437,33 +437,33 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center min-h-[500px] text-zinc-400">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-500"></div>
+      <div className="flex items-center justify-center min-h-[500px] text-muted">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent" />
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6 text-zinc-100">
+    <div className="w-full max-w-6xl mx-auto px-4 py-6 text-ink">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-zinc-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-rule">
         <div>
           <div className="flex items-center gap-3">
-            <span className="px-2.5 py-1 text-xs font-semibold rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            <span className="px-2 py-0.5 text-xs font-mono font-medium rounded border border-rule bg-paper-3 text-ink">
               {selectedOpening.eco}
             </span>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+            <h1 className="text-xl md:text-2xl font-semibold tracking-tight text-ink">
               {selectedOpening.name}
             </h1>
-            <span className={`px-2 py-0.5 text-xs font-medium rounded-full uppercase ${
+            <span className={`px-2 py-0.5 text-xs font-normal rounded border ${
               selectedOpening.category === 'gambit' 
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' 
-                : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                ? 'border-bad/40 bg-bad-subtle text-bad' 
+                : 'border-cool/40 bg-cool-subtle text-cool'
             }`}>
               {selectedOpening.category}
             </span>
           </div>
-          <p className="mt-1 text-sm text-zinc-400 max-w-2xl">
+          <p className="mt-1 text-xs text-muted max-w-2xl leading-relaxed">
             {selectedOpening.summary}
           </p>
         </div>
@@ -472,35 +472,35 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleSound}
-            className="p-2.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 transition text-zinc-300 hover:text-white"
+            className="p-2 rounded border border-rule bg-paper-2 hover:bg-paper-3 active:opacity-80 disabled:opacity-50 transition-colors duration-150 text-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-accent"
             title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
           >
-            {isMuted ? <VolumeX className="w-5 h-5 text-rose-400" /> : <Volume2 className="w-5 h-5 text-emerald-400" />}
+            {isMuted ? <VolumeX className="w-4 h-4 text-bad" /> : <Volume2 className="w-4 h-4 text-ok" />}
           </button>
           <button
             onClick={flipBoard}
-            className="px-3 py-2 text-sm font-medium rounded-lg bg-zinc-800/80 hover:bg-zinc-700 transition text-zinc-300 hover:text-white flex items-center gap-2"
+            className="px-3 py-1.5 text-xs font-medium rounded border border-rule bg-paper-2 hover:bg-paper-3 active:opacity-80 disabled:opacity-50 transition-colors duration-150 text-ink flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-accent"
           >
-            <RotateCcw className="w-4 h-4" />
-            Flip ({boardOrientation === 'white' ? 'White' : 'Black'})
+            <RotateCcw className="w-3.5 h-3.5 text-muted" />
+            <span>Flip ({boardOrientation === 'white' ? 'White' : 'Black'})</span>
           </button>
           <button
             onClick={() => resetLine(selectedVariation)}
-            className="px-3.5 py-2 text-sm font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 transition text-white flex items-center gap-2 shadow-lg shadow-emerald-950/40"
+            className="px-3 py-1.5 text-xs font-medium rounded border border-accent bg-accent text-paper hover:opacity-90 active:opacity-80 disabled:opacity-50 transition-colors duration-150 flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-accent"
           >
-            <RotateCcw className="w-4 h-4" />
-            Restart Line
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Restart line</span>
           </button>
         </div>
       </div>
 
       {/* Main Grid: Left Chessboard & Trainer, Right Contextual Lesson Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
         {/* Left Column: Board & Interactive Controls (7 cols) */}
         <div className="lg:col-span-7 flex flex-col items-center">
           {/* Variation Tabs */}
-          <div className="w-full flex items-center gap-2 mb-4 overflow-x-auto pb-1">
-            <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider whitespace-nowrap">Lines:</span>
+          <div className="w-full flex items-center gap-2 mb-3 overflow-x-auto pb-1">
+            <span className="text-xs font-medium text-muted whitespace-nowrap">Lines:</span>
             {selectedOpening.variations.map((v) => {
               const isMastered = !!masteredVariations[v.id];
               const isCurrent = v.id === selectedVariation.id;
@@ -510,14 +510,14 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                   onClick={() => {
                     setSelectedVariation(v);
                   }}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition flex items-center gap-1.5 ${
+                  className={`px-2.5 py-1 text-xs font-medium rounded whitespace-nowrap transition-colors duration-150 border active:opacity-80 disabled:opacity-50 flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-accent ${
                     isCurrent
-                      ? 'bg-emerald-500 text-zinc-950 font-bold shadow'
-                      : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                      ? 'border-ink bg-ink text-paper font-semibold'
+                      : 'border-rule bg-paper-2 text-muted hover:text-ink hover:bg-paper-3'
                   }`}
                 >
-                  {isMastered && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />}
-                  {v.name}
+                  {isMastered && <CheckCircle2 className="w-3.5 h-3.5 text-ok" />}
+                  <span>{v.name}</span>
                 </button>
               );
             })}
@@ -525,41 +525,41 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
           {/* Progress Bar */}
           <div className="w-full mb-3">
-            <div className="flex justify-between items-center text-xs text-zinc-400 mb-1">
-              <span>Progress: Move {currentPlyIndex} of {totalMovesInLine}</span>
-              <span className="font-semibold text-emerald-400">{progressPercent}%</span>
+            <div className="flex justify-between items-center text-xs text-muted mb-1">
+              <span>Progress: move {currentPlyIndex} of {totalMovesInLine}</span>
+              <span className="font-mono text-accent">{progressPercent}%</span>
             </div>
-            <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+            <div className="w-full h-1 bg-paper-3 border border-rule rounded overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300 rounded-full"
-                style={{ width: `${progressPercent}%` }}
+                className="h-full w-full bg-accent origin-left transition-transform duration-200 motion-reduce:transition-none"
+                style={{ transform: `scaleX(${progressPercent / 100})` }}
               />
             </div>
           </div>
 
           {/* Past Move Inspection Banner */}
           {isInspectingPast && (
-            <div className="w-full max-w-[500px] mb-3 px-3.5 py-2 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-center justify-between text-xs text-amber-300 shadow-md">
+            <div className="w-full max-w-[500px] mb-3 px-3 py-2 rounded border border-accent/40 bg-accent-subtle flex items-center justify-between text-xs text-accent">
               <div className="flex items-center gap-2">
-                <History className="w-4 h-4 text-amber-400" />
+                <History className="w-3.5 h-3.5 text-accent" />
                 <span>
-                  Viewing Move {Math.ceil((inspectedPlyIndex! + 1) / 2)}. {selectedVariation.moves[inspectedPlyIndex!].turn === 'b' ? '...' : ''}{selectedVariation.moves[inspectedPlyIndex!].san}
+                  Viewing move {Math.ceil((inspectedPlyIndex! + 1) / 2)}. {selectedVariation.moves[inspectedPlyIndex!].turn === 'b' ? '…' : ''}{selectedVariation.moves[inspectedPlyIndex!].san}
                 </span>
               </div>
               <button
                 onClick={() => setInspectedPlyIndex(currentPlyIndex - 1)}
-                className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 font-semibold transition"
+                className="px-2 py-0.5 rounded border border-accent/50 bg-paper-2 hover:bg-paper-3 active:opacity-80 disabled:opacity-50 text-accent font-medium transition-colors duration-150"
               >
-                Resume Live Board →
+                Resume live board
               </button>
             </div>
           )}
 
           {/* Interactive Chessboard Container */}
           <div 
-            className={`w-full max-w-[500px] aspect-square rounded-xl overflow-hidden shadow-2xl border-2 border-zinc-800/90 transition-transform ${
-              shakeBoard ? 'animate-shake border-rose-500/80 shadow-rose-950/50' : ''
-            } ${feedback.status === 'correct' ? 'border-emerald-500/70 shadow-emerald-950/40' : ''}`}
+            className={`w-full max-w-[500px] aspect-square rounded overflow-hidden border border-rule transition-colors duration-150 ${
+              shakeBoard ? 'animate-shake border-bad' : ''
+            } ${feedback.status === 'correct' ? 'border-ok' : ''}`}
           >
             <Chessboard
               options={{
@@ -567,9 +567,9 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                 boardOrientation: boardOrientation,
                 squareStyles: customSquareStyles,
                 arrows: customArrows,
-                darkSquareStyle: { backgroundColor: '#4a6b47' },
-                lightSquareStyle: { backgroundColor: '#cad2b8' },
-                animationDurationInMs: 220,
+                darkSquareStyle: { backgroundColor: '#38463c' },
+                lightSquareStyle: { backgroundColor: '#a8b09d' },
+                animationDurationInMs: 200,
                 allowDragging: !isLineComplete && !isInspectingPast,
                 onPieceDrop: onDrop
               }}
@@ -578,33 +578,33 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
           {/* Trainer Interactive Feedback Box */}
           <div className="w-full max-w-[500px] mt-4">
-            <div className={`p-4 rounded-xl border transition-all ${
+            <div className={`p-4 rounded border transition-colors duration-150 ${
               feedback.status === 'correct'
-                ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200'
+                ? 'bg-ok-subtle border-ok/40 text-ok'
                 : feedback.status === 'incorrect'
-                ? 'bg-rose-950/30 border-rose-500/40 text-rose-200'
+                ? 'bg-bad-subtle border-bad/40 text-bad'
                 : feedback.status === 'hint'
-                ? 'bg-amber-950/30 border-amber-500/40 text-amber-200'
+                ? 'bg-accent-subtle border-accent/40 text-accent'
                 : feedback.status === 'complete'
-                ? 'bg-teal-950/40 border-teal-400/50 text-teal-200'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-300'
+                ? 'bg-cool-subtle border-cool/40 text-cool'
+                : 'bg-paper-2 border-rule text-ink'
             }`}>
               <div className="flex items-start gap-3">
-                {feedback.status === 'correct' && <CheckCircle2 className="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" />}
-                {feedback.status === 'incorrect' && <AlertTriangle className="w-5 h-5 text-rose-400 mt-0.5 shrink-0" />}
-                {feedback.status === 'hint' && <Lightbulb className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />}
-                {feedback.status === 'complete' && <Award className="w-5 h-5 text-teal-400 mt-0.5 shrink-0" />}
-                {feedback.status === 'idle' && <Sparkles className="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" />}
+                {feedback.status === 'correct' && <CheckCircle2 className="w-4 h-4 text-ok mt-0.5 shrink-0" />}
+                {feedback.status === 'incorrect' && <AlertTriangle className="w-4 h-4 text-bad mt-0.5 shrink-0" />}
+                {feedback.status === 'hint' && <Lightbulb className="w-4 h-4 text-accent mt-0.5 shrink-0" />}
+                {feedback.status === 'complete' && <Award className="w-4 h-4 text-cool mt-0.5 shrink-0" />}
+                {feedback.status === 'idle' && <Sparkles className="w-4 h-4 text-accent mt-0.5 shrink-0" />}
                 
                 <div className="flex-1">
-                  <div className="font-semibold text-sm">
-                    {feedback.status === 'correct' && 'Great Move!'}
-                    {feedback.status === 'incorrect' && 'Wrong Move!'}
-                    {feedback.status === 'hint' && 'Move Guidance'}
-                    {feedback.status === 'complete' && 'Variation Completed!'}
-                    {feedback.status === 'idle' && 'Your Objective:'}
+                  <div className="font-semibold text-xs">
+                    {feedback.status === 'correct' && 'Great move'}
+                    {feedback.status === 'incorrect' && 'Wrong move'}
+                    {feedback.status === 'hint' && 'Move guidance'}
+                    {feedback.status === 'complete' && 'Variation completed'}
+                    {feedback.status === 'idle' && 'Your objective'}
                   </div>
-                  <div className="text-xs md:text-sm mt-0.5 leading-relaxed">
+                  <div className="text-xs mt-1 leading-relaxed text-ink">
                     {feedback.message}
                   </div>
                 </div>
@@ -612,11 +612,11 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                 {!isLineComplete && (
                   <button
                     onClick={handleRequestHint}
-                    className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition flex items-center gap-1 shrink-0"
+                    className="px-2 py-1 text-xs font-medium rounded border border-rule bg-paper-3 text-ink hover:bg-paper active:opacity-80 disabled:opacity-50 transition-colors duration-150 flex items-center gap-1 shrink-0"
                     title="Get a hint for the next move"
                   >
-                    <Lightbulb className="w-3.5 h-3.5" />
-                    Hint
+                    <Lightbulb className="w-3.5 h-3.5 text-accent" />
+                    <span>Hint</span>
                   </button>
                 )}
               </div>
@@ -625,43 +625,43 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
         </div>
 
         {/* Right Column: Contextual Lesson Content & Opening Theory (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col gap-5">
+        <div className="lg:col-span-5 flex flex-col gap-4">
           {/* Card 1: Move History & Annotations */}
-          <div className="bg-zinc-900/90 rounded-xl p-5 border border-zinc-800 shadow-xl">
+          <div className="bg-paper-2 rounded-md p-4 border border-rule">
             {/* Header: Title and View Mode Toggle */}
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
-                <History className="w-4 h-4" />
-                <span>Move History & Annotations</span>
+              <div className="flex items-center gap-2 text-ink text-xs font-medium">
+                <History className="w-3.5 h-3.5 text-muted" />
+                <span>Move history and annotations</span>
                 {playedMoves.length > 0 && (
-                  <span className="text-[11px] font-normal text-zinc-400 font-mono">
+                  <span className="text-xs text-muted font-mono">
                     ({playedMoves.length}/{totalMovesInLine})
                   </span>
                 )}
               </div>
 
               {playedMoves.length > 0 && (
-                <div className="flex items-center gap-1 bg-zinc-950/80 p-0.5 rounded-lg border border-zinc-800 text-xs">
+                <div className="flex items-center gap-1 bg-paper-3 p-0.5 rounded border border-rule text-xs">
                   <button
                     onClick={() => setHistoryViewMode('timeline')}
-                    className={`px-2.5 py-1 rounded-md transition font-medium flex items-center gap-1.5 ${
+                    className={`px-2 py-0.5 rounded transition-colors duration-150 text-xs font-medium flex items-center gap-1 active:opacity-80 disabled:opacity-50 ${
                       historyViewMode === 'timeline'
-                        ? 'bg-zinc-800 text-white font-semibold shadow-sm'
-                        : 'text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-paper border border-rule text-ink'
+                        : 'text-muted hover:text-ink'
                     }`}
                   >
-                    <ListOrdered className="w-3.5 h-3.5" />
-                    <span>All Moves</span>
+                    <ListOrdered className="w-3 h-3" />
+                    <span>All moves</span>
                   </button>
                   <button
                     onClick={() => setHistoryViewMode('focus')}
-                    className={`px-2.5 py-1 rounded-md transition font-medium flex items-center gap-1.5 ${
+                    className={`px-2 py-0.5 rounded transition-colors duration-150 text-xs font-medium flex items-center gap-1 active:opacity-80 disabled:opacity-50 ${
                       historyViewMode === 'focus'
-                        ? 'bg-zinc-800 text-white font-semibold shadow-sm'
-                        : 'text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-paper border border-rule text-ink'
+                        : 'text-muted hover:text-ink'
                     }`}
                   >
-                    <BookOpen className="w-3.5 h-3.5" />
+                    <BookOpen className="w-3 h-3" />
                     <span>Focus</span>
                   </button>
                 </div>
@@ -669,45 +669,49 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
             </div>
 
             {playedMoves.length === 0 ? (
-              <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800/80 text-center text-xs text-zinc-400 italic">
+              <div className="p-3 rounded border border-rule bg-paper-3 text-center text-xs text-muted">
                 Make your first move on the board to view step-by-step master annotations and move history.
               </div>
             ) : (
               <div className="space-y-3">
                 {/* Move notation ribbon with navigation stepping buttons */}
-                <div className="flex items-center justify-between gap-2 p-2 bg-zinc-950/70 rounded-xl border border-zinc-800/80">
+                <div className="flex items-center justify-between gap-2 p-1.5 bg-paper-3 rounded border border-rule">
                   <div className="flex items-center gap-1 overflow-x-auto py-0.5 text-xs font-mono">
                     {movePairs.map((pair) => (
-                      <div key={pair.moveNumber} className="flex items-center gap-1 bg-zinc-900/90 px-2 py-1 rounded-lg border border-zinc-800/80 shrink-0">
-                        <span className="text-zinc-500 text-[11px] select-none">{pair.moveNumber}.</span>
+                      <div key={pair.moveNumber} className="flex items-center gap-1 bg-paper-2 px-1.5 py-0.5 rounded border border-rule shrink-0">
+                        <span className="text-muted text-xs select-none">{pair.moveNumber}.</span>
                         
                         {pair.white && (
                           <button
                             onClick={() => setInspectedPlyIndex(pair.whitePlyIndex!)}
-                            className={`px-1.5 py-0.5 rounded transition font-medium ${
+                            className={`px-1 py-0.5 rounded transition-colors duration-150 active:opacity-80 disabled:opacity-50 font-mono text-xs flex items-center gap-0.5 ${
                               inspectedPlyIndex === pair.whitePlyIndex
-                                ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
-                                : 'text-zinc-200 hover:text-white hover:bg-zinc-800'
+                                ? 'bg-accent text-paper font-semibold'
+                                : 'text-ink hover:bg-paper-3'
                             }`}
                             title={`Inspect ${pair.moveNumber}. ${pair.white.san}`}
                           >
-                            {pair.white.san}
-                            {pair.white.isSacrifice && ' 🔥'}
+                            <span>{pair.white.san}</span>
+                            {pair.white.isSacrifice && (
+                              <Flame className="w-2.5 h-2.5 text-bad inline shrink-0" />
+                            )}
                           </button>
                         )}
 
                         {pair.black && (
                           <button
                             onClick={() => setInspectedPlyIndex(pair.blackPlyIndex!)}
-                            className={`px-1.5 py-0.5 rounded transition font-medium ${
+                            className={`px-1 py-0.5 rounded transition-colors duration-150 active:opacity-80 disabled:opacity-50 font-mono text-xs flex items-center gap-0.5 ${
                               inspectedPlyIndex === pair.blackPlyIndex
-                                ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
-                                : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+                                ? 'bg-accent text-paper font-semibold'
+                                : 'text-muted hover:text-ink hover:bg-paper-3'
                             }`}
                             title={`Inspect ${pair.moveNumber}... ${pair.black.san}`}
                           >
-                            {pair.black.san}
-                            {pair.black.isSacrifice && ' 🔥'}
+                            <span>{pair.black.san}</span>
+                            {pair.black.isSacrifice && (
+                              <Flame className="w-2.5 h-2.5 text-bad inline shrink-0" />
+                            )}
                           </button>
                         )}
                       </div>
@@ -715,11 +719,11 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                   </div>
 
                   {/* Navigation step buttons */}
-                  <div className="flex items-center gap-0.5 shrink-0 text-zinc-400">
+                  <div className="flex items-center gap-0.5 shrink-0 text-muted">
                     <button
                       onClick={handleFirstMove}
                       disabled={inspectedPlyIndex === 0}
-                      className="p-1 rounded hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition"
+                      className="p-1 rounded hover:text-ink active:opacity-80 disabled:opacity-30 transition-colors duration-150"
                       title="First move"
                     >
                       <ChevronsLeft className="w-3.5 h-3.5" />
@@ -727,7 +731,7 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                     <button
                       onClick={handlePrevMove}
                       disabled={inspectedPlyIndex === 0}
-                      className="p-1 rounded hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition"
+                      className="p-1 rounded hover:text-ink active:opacity-80 disabled:opacity-30 transition-colors duration-150"
                       title="Previous move"
                     >
                       <ChevronLeft className="w-3.5 h-3.5" />
@@ -735,7 +739,7 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                     <button
                       onClick={handleNextMove}
                       disabled={inspectedPlyIndex === currentPlyIndex - 1}
-                      className="p-1 rounded hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition"
+                      className="p-1 rounded hover:text-ink active:opacity-80 disabled:opacity-30 transition-colors duration-150"
                       title="Next move"
                     >
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -743,7 +747,7 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                     <button
                       onClick={handleLatestMove}
                       disabled={inspectedPlyIndex === currentPlyIndex - 1}
-                      className="p-1 rounded hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition"
+                      className="p-1 rounded hover:text-ink active:opacity-80 disabled:opacity-30 transition-colors duration-150"
                       title="Latest move"
                     >
                       <ChevronsRight className="w-3.5 h-3.5" />
@@ -753,7 +757,7 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
                 {/* View 1: Timeline of All Moves Done */}
                 {historyViewMode === 'timeline' ? (
-                  <div ref={historyContainerRef} className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
+                  <div ref={historyContainerRef} className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                     {playedMoves.map((m, idx) => {
                       const isSelected = inspectedPlyIndex === idx;
                       const moveNum = Math.ceil(m.ply / 2);
@@ -763,51 +767,53 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                         <div
                           key={idx}
                           onClick={() => setInspectedPlyIndex(idx)}
-                          className={`p-3 rounded-xl border text-xs cursor-pointer transition ${
+                          className={`p-3 rounded border text-xs cursor-pointer transition-colors duration-150 ${
                             isSelected
-                              ? 'bg-emerald-950/30 border-emerald-500/60 shadow-md shadow-emerald-950/20'
-                              : 'bg-zinc-950/50 hover:bg-zinc-800/50 border-zinc-800/80'
+                              ? 'border-rule-2 bg-paper-3'
+                              : 'border-rule bg-paper-2 hover:bg-paper-3'
                           }`}
                         >
                           <div className="flex items-center justify-between mb-1.5">
                             <div className="flex items-center gap-2">
-                              <span className="font-mono font-bold text-sm text-white">
-                                {moveNum}. {isWhite ? '' : '...'}{m.san}
+                              <span className="font-mono font-medium text-xs text-ink">
+                                {moveNum}. {isWhite ? '' : '…'}{m.san}
                               </span>
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${
-                                isWhite ? 'bg-zinc-700 text-zinc-200' : 'bg-zinc-900 text-zinc-400 border border-zinc-700'
-                              }`}>
+                              <span className="px-1.5 py-0.2 rounded border border-rule bg-paper-3 text-[11px] text-muted">
                                 {isWhite ? 'White' : 'Black'}
                               </span>
                               {m.isSacrifice && (
-                                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40 flex items-center gap-1">
-                                  <Flame className="w-2.5 h-2.5 text-rose-400" />
-                                  Sacrifice
+                                <span className="px-1.5 py-0.2 rounded border border-bad/40 bg-bad-subtle text-bad text-[11px] flex items-center gap-1">
+                                  <Flame className="w-2.5 h-2.5 text-bad shrink-0" />
+                                  <span>Sacrifice</span>
                                 </span>
                               )}
                             </div>
                             {isSelected && (
-                              <span className="text-[10px] font-medium text-emerald-400 flex items-center gap-1">
-                                <CheckCircle2 className="w-3 h-3" />
-                                Inspecting
+                              <span className="text-[11px] text-accent flex items-center gap-1">
+                                <CheckCircle2 className="w-3 h-3 text-accent" />
+                                <span>Inspecting</span>
                               </span>
                             )}
                           </div>
 
-                          <p className="text-zinc-300 leading-relaxed text-xs">
+                          <p className="text-muted leading-relaxed text-xs">
                             {m.annotation}
                           </p>
 
                           {m.whyThisMove && (
-                            <div className="mt-2 p-2 rounded-lg bg-zinc-900/80 border border-zinc-800/90 text-[11px] text-zinc-300">
-                              <span className="font-semibold text-amber-400 mr-1">Strategic Rationale:</span>
-                              {m.whyThisMove}
+                            <div className="mt-2 p-2 rounded border border-rule bg-paper-3 text-xs text-ink">
+                              <span className="font-medium text-accent mr-1">Strategic rationale:</span>
+                              <span className="text-muted">{m.whyThisMove}</span>
                             </div>
                           )}
 
                           {m.sacrificeInfo && (
-                            <div className="mt-2 p-2 rounded-lg bg-rose-950/20 border border-rose-900/40 text-[11px] text-rose-200">
-                              <span className="font-semibold text-rose-400 mr-1">Material:</span> {m.sacrificeInfo.material} • <span className="font-semibold text-rose-400 mr-1">Compensation:</span> {m.sacrificeInfo.compensation}
+                            <div className="mt-2 p-2 rounded border border-bad/30 bg-bad-subtle text-xs text-ink">
+                              <span className="font-medium text-bad mr-1">Material:</span>
+                              <span className="text-muted">{m.sacrificeInfo.material}</span>
+                              <span className="text-muted mx-1">/</span>
+                              <span className="font-medium text-bad mr-1">Compensation:</span>
+                              <span className="text-muted">{m.sacrificeInfo.compensation}</span>
                             </div>
                           )}
                         </div>
@@ -819,45 +825,43 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
                   inspectedMove ? (
                     <div className="space-y-3 p-1">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-white tracking-wide">
-                          {Math.ceil(inspectedMove.ply / 2)}. {inspectedMove.turn === 'b' ? '...' : ''}{inspectedMove.san}
+                        <span className="text-lg font-semibold text-ink font-mono">
+                          {Math.ceil(inspectedMove.ply / 2)}. {inspectedMove.turn === 'b' ? '…' : ''}{inspectedMove.san}
                         </span>
-                        <span className={`px-2 py-0.5 text-xs font-semibold rounded uppercase ${
-                          inspectedMove.turn === 'w' ? 'bg-zinc-700 text-zinc-200' : 'bg-zinc-900 text-zinc-400 border border-zinc-700'
-                        }`}>
+                        <span className="px-1.5 py-0.5 text-xs rounded border border-rule bg-paper-3 text-muted">
                           {inspectedMove.turn === 'w' ? 'White' : 'Black'}
                         </span>
                         {inspectedMove.isSacrifice && (
-                          <span className="px-2 py-0.5 text-xs font-semibold rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 flex items-center gap-1">
-                            <Flame className="w-3 h-3 text-rose-400" />
-                            Sacrifice
+                          <span className="px-1.5 py-0.5 text-xs rounded border border-bad/40 bg-bad-subtle text-bad flex items-center gap-1">
+                            <Flame className="w-3 h-3 text-bad shrink-0" />
+                            <span>Sacrifice</span>
                           </span>
                         )}
                       </div>
 
-                      <p className="text-sm text-zinc-300 leading-relaxed">
+                      <p className="text-xs text-muted leading-relaxed">
                         {inspectedMove.annotation}
                       </p>
 
                       {inspectedMove.whyThisMove && (
-                        <div className="p-3 rounded-lg bg-zinc-800/60 border border-zinc-700/50 text-xs text-zinc-300">
-                          <span className="font-semibold text-amber-400 block mb-1">Strategic Rationale:</span>
-                          {inspectedMove.whyThisMove}
+                        <div className="p-3 rounded border border-rule bg-paper-3 text-xs text-ink">
+                          <span className="font-medium text-accent block mb-1">Strategic rationale</span>
+                          <p className="text-muted leading-relaxed">{inspectedMove.whyThisMove}</p>
                         </div>
                       )}
 
                       {inspectedMove.sacrificeInfo && (
-                        <div className="p-3 rounded-lg bg-rose-950/20 border border-rose-900/40 text-xs">
-                          <div className="font-semibold text-rose-400 flex items-center gap-1 mb-1">
-                            <Flame className="w-3.5 h-3.5" />
-                            Sacrifice Anatomy:
+                        <div className="p-3 rounded border border-bad/30 bg-bad-subtle text-xs">
+                          <div className="font-medium text-bad flex items-center gap-1 mb-1">
+                            <Flame className="w-3.5 h-3.5 text-bad shrink-0" />
+                            <span>Sacrifice anatomy</span>
                           </div>
-                          <div className="text-zinc-300">
-                            <span className="font-medium text-zinc-200">Material: </span>
+                          <div className="text-ink">
+                            <span className="text-muted">Material: </span>
                             {inspectedMove.sacrificeInfo.material}
                           </div>
-                          <div className="text-zinc-300 mt-1">
-                            <span className="font-medium text-zinc-200">Compensation: </span>
+                          <div className="text-ink mt-1">
+                            <span className="text-muted">Compensation: </span>
                             {inspectedMove.sacrificeInfo.compensation}
                           </div>
                         </div>
@@ -870,29 +874,29 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
           </div>
 
           {/* Card 2: The Philosophy & Key Strategic Themes */}
-          <div className="bg-zinc-900/90 rounded-xl p-5 border border-zinc-800 shadow-xl space-y-4">
+          <div className="bg-paper-2 rounded-md p-4 border border-rule space-y-4">
             <div>
-              <div className="flex items-center gap-2 text-amber-400 text-sm font-semibold mb-2">
-                <Swords className="w-4 h-4" />
-                <span>The Philosophy: Why Play It?</span>
+              <div className="flex items-center gap-2 text-accent text-xs font-medium mb-1.5">
+                <Swords className="w-3.5 h-3.5 text-accent" />
+                <span>The philosophy</span>
               </div>
-              <p className="text-xs md:text-sm text-zinc-300 leading-relaxed">
+              <p className="text-xs text-muted leading-relaxed">
                 {selectedOpening.philosophy}
               </p>
             </div>
 
             <div>
-              <div className="flex items-center gap-2 text-cyan-400 text-sm font-semibold mb-2">
-                <Layers className="w-4 h-4" />
-                <span>Key Strategic Themes</span>
+              <div className="flex items-center gap-2 text-cool text-xs font-medium mb-2">
+                <Layers className="w-3.5 h-3.5 text-cool" />
+                <span>Key strategic themes</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {selectedOpening.keyThemes.map((theme, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 text-xs rounded-md bg-zinc-800/80 text-zinc-200 border border-zinc-700/60"
+                    className="px-2 py-0.5 text-xs rounded border border-rule bg-paper-3 text-muted"
                   >
-                    • {theme}
+                    {theme}
                   </span>
                 ))}
               </div>
@@ -900,11 +904,11 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
             {selectedOpening.pawnStructureInfo && (
               <div>
-                <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold mb-1">
-                  <Shield className="w-4 h-4" />
-                  <span>Pawn Structure & Compensation</span>
+                <div className="flex items-center gap-2 text-ok text-xs font-medium mb-1">
+                  <Shield className="w-3.5 h-3.5 text-ok" />
+                  <span>Pawn structure and compensation</span>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-muted leading-relaxed">
                   {selectedOpening.pawnStructureInfo}
                 </p>
               </div>
@@ -913,25 +917,25 @@ export default function ChessTrainer({ initialOpening }: ChessTrainerProps) {
 
           {/* Card 3: Famous Historical Master Game */}
           {selectedOpening.famousGame && (
-            <div className="bg-zinc-900/90 rounded-xl p-5 border border-zinc-800 shadow-xl">
+            <div className="bg-paper-2 rounded-md p-4 border border-rule">
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2 text-purple-400 text-sm font-semibold">
-                  <Award className="w-4 h-4" />
-                  <span>Historic Game Reference</span>
+                <div className="flex items-center gap-2 text-cool text-xs font-medium">
+                  <Award className="w-3.5 h-3.5 text-cool" />
+                  <span>Historic game reference</span>
                 </div>
-                <span className="text-xs text-zinc-400">
+                <span className="text-xs text-muted font-mono">
                   {selectedOpening.famousGame.year}
                 </span>
               </div>
 
-              <div className="font-bold text-sm text-white">
+              <div className="font-semibold text-xs text-ink">
                 {selectedOpening.famousGame.white} vs {selectedOpening.famousGame.black}
               </div>
-              <div className="text-xs text-emerald-400 font-mono mt-0.5">
-                {selectedOpening.famousGame.event} • Result: {selectedOpening.famousGame.result}
+              <div className="text-xs text-muted mt-0.5">
+                {selectedOpening.famousGame.event} / Result: {selectedOpening.famousGame.result}
               </div>
 
-              <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
+              <p className="text-xs text-muted mt-2 leading-relaxed">
                 {selectedOpening.famousGame.description}
               </p>
             </div>

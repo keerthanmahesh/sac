@@ -110,7 +110,7 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
     });
   }, [openings, searchQuery, filterCategory, sortBy]);
 
-  // Counts for pills
+  // Counts for filters
   const counts = useMemo(() => {
     return {
       all: openings.length,
@@ -139,16 +139,16 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
 
     if (sortBy === 'level-desc') {
       return [
-        { level: 'advanced' as DifficultyLevel, title: 'Advanced Systems', subtitle: 'Complex theoretical labyrinths requiring precise tactical calculation.', items: advancedList },
-        { level: 'intermediate' as DifficultyLevel, title: 'Intermediate Repertoire', subtitle: 'Sharp complications, active pawn breaks, and dynamic piece play.', items: intermediateList },
-        { level: 'beginner' as DifficultyLevel, title: 'Beginner Foundations', subtitle: 'Straightforward central plans, solid structures, and essential traps.', items: beginnerList },
+        { level: 'advanced' as DifficultyLevel, title: 'Advanced systems', subtitle: 'Complex theoretical labyrinths requiring precise tactical calculation.', items: advancedList },
+        { level: 'intermediate' as DifficultyLevel, title: 'Intermediate repertoire', subtitle: 'Sharp complications, active pawn breaks, and dynamic piece play.', items: intermediateList },
+        { level: 'beginner' as DifficultyLevel, title: 'Beginner foundations', subtitle: 'Straightforward central plans, solid structures, and essential traps.', items: beginnerList },
       ].filter((g) => g.items.length > 0);
     }
 
     return [
-      { level: 'beginner' as DifficultyLevel, title: 'Beginner Foundations', subtitle: 'Straightforward central plans, solid structures, and essential traps.', items: beginnerList },
-      { level: 'intermediate' as DifficultyLevel, title: 'Intermediate Repertoire', subtitle: 'Sharp complications, active pawn breaks, and dynamic piece play.', items: intermediateList },
-      { level: 'advanced' as DifficultyLevel, title: 'Advanced Systems', subtitle: 'Complex theoretical labyrinths requiring precise tactical calculation.', items: advancedList },
+      { level: 'beginner' as DifficultyLevel, title: 'Beginner foundations', subtitle: 'Straightforward central plans, solid structures, and essential traps.', items: beginnerList },
+      { level: 'intermediate' as DifficultyLevel, title: 'Intermediate repertoire', subtitle: 'Sharp complications, active pawn breaks, and dynamic piece play.', items: intermediateList },
+      { level: 'advanced' as DifficultyLevel, title: 'Advanced systems', subtitle: 'Complex theoretical labyrinths requiring precise tactical calculation.', items: advancedList },
     ].filter((g) => g.items.length > 0);
   }, [isLevelGrouped, sortedAndFilteredOpenings, sortBy]);
 
@@ -161,46 +161,46 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
       <Link
         key={op.id}
         href={`/train/${op.slug}`}
-        className="p-5 rounded-2xl border bg-zinc-900/40 border-zinc-800/80 hover:bg-zinc-900/90 hover:border-emerald-500/60 transition-all duration-200 flex flex-col justify-between group shadow-lg hover:shadow-emerald-950/20 hover:-translate-y-0.5"
+        className="p-5 rounded-md border border-rule bg-paper-2 hover:bg-paper-3 hover:border-rule-2 active:bg-paper-3 transition-colors duration-150 flex flex-col justify-between group"
       >
         <div>
           {/* Badges Row */}
           <div className="flex items-center justify-between gap-2 mb-3">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 text-xs font-mono font-semibold rounded-lg bg-amber-500/15 text-amber-400 border border-amber-500/25">
+              <span className="px-2 py-0.5 text-xs font-mono font-medium rounded border border-rule bg-paper-3 text-ink">
                 {op.eco}
               </span>
               <span
-                className={`px-2.5 py-0.5 text-[11px] font-semibold rounded-full uppercase flex items-center gap-1 ${
+                className={`px-2 py-0.5 text-xs font-normal rounded flex items-center gap-1 border ${
                   isGambit
-                    ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30'
-                    : 'bg-blue-500/15 text-blue-300 border border-blue-500/30'
+                    ? 'border-bad/40 bg-bad-subtle text-bad'
+                    : 'border-cool/40 bg-cool-subtle text-cool'
                 }`}
               >
-                {isGambit ? <Flame className="w-3 h-3 text-rose-400" /> : <Shield className="w-3 h-3 text-blue-400" />}
-                {op.category}
+                {isGambit ? <Flame className="w-3 h-3 text-bad" /> : <Shield className="w-3 h-3 text-cool" />}
+                <span>{op.category}</span>
               </span>
             </div>
 
-            <span className="text-[11px] font-medium text-zinc-400">
-              {op.side === 'white' ? '⚪ Play as White' : '⚫ Play as Black'}
+            <span className="text-xs text-muted">
+              {op.side === 'white' ? 'White repertoire' : 'Black defense'}
             </span>
           </div>
 
           {/* Title & Summary */}
           <div className="flex items-baseline justify-between gap-2">
-            <h2 className="font-bold text-lg text-white group-hover:text-emerald-400 transition">
+            <h2 className="font-semibold text-base text-ink group-hover:text-accent transition-colors duration-150">
               {op.name}
             </h2>
             {isFullyMastered && (
-              <span className="text-xs text-emerald-400 flex items-center gap-1 shrink-0 font-medium bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="text-xs text-ok flex items-center gap-1 shrink-0 font-normal px-1.5 py-0.5 rounded border border-ok/30 bg-ok-subtle">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Mastered
               </span>
             )}
           </div>
 
-          <p className="text-xs text-zinc-400 mt-2 leading-relaxed line-clamp-2">
+          <p className="text-xs text-muted mt-2 leading-relaxed line-clamp-2">
             {op.summary}
           </p>
 
@@ -209,41 +209,41 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
             {op.keyThemes.slice(0, 2).map((theme, idx) => (
               <span
                 key={idx}
-                className="text-[10px] px-2 py-0.5 rounded bg-zinc-800/80 text-zinc-300 border border-zinc-700/50"
+                className="text-[11px] px-2 py-0.5 rounded border border-rule bg-paper-3 text-muted"
               >
                 {theme}
               </span>
             ))}
             {op.keyThemes.length > 2 && (
-              <span className="text-[10px] text-zinc-500 self-center">
+              <span className="text-[11px] text-muted self-center">
                 +{op.keyThemes.length - 2} more
               </span>
             )}
           </div>
         </div>
 
-        {/* Bottom Card Footer with Color-Coded Level Badge */}
-        <div className="mt-5 pt-3.5 border-t border-zinc-800/70 flex items-center justify-between text-xs">
+        {/* Bottom Card Footer with Level Badge */}
+        <div className="mt-5 pt-3 border-t border-rule flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
-            <span className="text-zinc-500 text-xs">Level:</span>
+            <span className="text-muted">Level</span>
             <span
-              className={`px-2 py-0.5 rounded text-[11px] font-semibold capitalize ${
+              className={`px-2 py-0.5 rounded text-xs font-medium border ${
                 op.difficulty === 'beginner'
-                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                  ? 'border-ok/30 bg-ok-subtle text-ok'
                   : op.difficulty === 'intermediate'
-                  ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
-                  : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
+                  ? 'border-accent/30 bg-accent-subtle text-accent'
+                  : 'border-rule-2 bg-paper-3 text-ink'
               }`}
             >
               {op.difficulty}
             </span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-zinc-400">{op.variations.length} {op.variations.length === 1 ? 'line' : 'lines'}</span>
+            <span className="text-muted">/</span>
+            <span className="text-muted">{op.variations.length} {op.variations.length === 1 ? 'line' : 'lines'}</span>
           </div>
 
-          <div className="text-emerald-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-            <span>Practice Line</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+          <div className="text-accent font-medium flex items-center gap-1">
+            <span>Practice line</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 motion-reduce:transform-none motion-safe:group-hover:translate-x-0.5" />
           </div>
         </div>
       </Link>
@@ -251,17 +251,17 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8 text-zinc-100">
+    <div className="w-full max-w-6xl mx-auto px-4 py-8 text-ink">
       {/* Filter Tabs & Search / Sort Controls */}
       <div className="flex flex-col gap-3 mb-8">
         {/* Row 1: Category & Level Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
           <button
             onClick={() => setFilterCategory('all')}
-            className={`px-3.5 py-2 rounded-xl font-medium whitespace-nowrap transition ${
+            className={`px-3 py-1.5 rounded font-medium whitespace-nowrap transition-colors duration-150 border active:opacity-80 disabled:opacity-50 ${
               filterCategory === 'all'
-                ? 'bg-zinc-100 text-zinc-950 font-bold shadow'
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+                ? 'bg-ink text-paper border-ink'
+                : 'bg-paper-2 text-muted hover:text-ink border-rule'
             }`}
           >
             All ({counts.all})
@@ -270,10 +270,10 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
           {/* Openings (Classical) before Gambits */}
           <button
             onClick={() => setFilterCategory('classical')}
-            className={`px-3.5 py-2 rounded-xl font-medium whitespace-nowrap transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded font-medium whitespace-nowrap transition-colors duration-150 border active:opacity-80 disabled:opacity-50 flex items-center gap-1.5 ${
               filterCategory === 'classical'
-                ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-950/40'
-                : 'bg-zinc-900 text-blue-400 hover:text-blue-300 border border-zinc-800'
+                ? 'bg-cool-subtle text-cool border-cool/40'
+                : 'bg-paper-2 text-muted hover:text-ink border-rule'
             }`}
           >
             <Shield className="w-3.5 h-3.5" />
@@ -283,10 +283,10 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
           {/* Gambits */}
           <button
             onClick={() => setFilterCategory('gambit')}
-            className={`px-3.5 py-2 rounded-xl font-medium whitespace-nowrap transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded font-medium whitespace-nowrap transition-colors duration-150 border active:opacity-80 disabled:opacity-50 flex items-center gap-1.5 ${
               filterCategory === 'gambit'
-                ? 'bg-rose-500 text-white font-bold shadow-lg shadow-rose-950/40'
-                : 'bg-zinc-900 text-rose-400 hover:text-rose-300 border border-zinc-800'
+                ? 'bg-bad-subtle text-bad border-bad/40'
+                : 'bg-paper-2 text-muted hover:text-ink border-rule'
             }`}
           >
             <Flame className="w-3.5 h-3.5" />
@@ -298,86 +298,84 @@ export default function OpeningCatalog({ openings }: OpeningCatalogProps) {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             {/* Sort Selector Dropdown */}
-            <div className="flex items-center gap-2 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-300 shadow-sm">
-              <ArrowUpDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="text-zinc-500 font-medium">Sort by:</span>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-paper-2 border border-rule rounded text-xs text-ink">
+              <ArrowUpDown className="w-3.5 h-3.5 text-accent shrink-0" />
+              <span className="text-muted">Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
                 aria-label="Sort openings catalog"
-                className="bg-transparent text-white font-semibold focus:outline-none cursor-pointer pr-1"
+                className="bg-transparent text-ink font-medium focus:outline-none cursor-pointer pr-1"
               >
-                <option value="level-asc" className="bg-zinc-900 text-white">Level: Beginner → Advanced</option>
-                <option value="level-desc" className="bg-zinc-900 text-white">Level: Advanced → Beginner</option>
-                <option value="name" className="bg-zinc-900 text-white">Name: A to Z</option>
-                <option value="eco" className="bg-zinc-900 text-white">ECO Code (A → E)</option>
+                <option value="level-asc" className="bg-paper-2 text-ink">Level: beginner to advanced</option>
+                <option value="level-desc" className="bg-paper-2 text-ink">Level: advanced to beginner</option>
+                <option value="name" className="bg-paper-2 text-ink">Name: A to Z</option>
+                <option value="eco" className="bg-paper-2 text-ink">ECO code</option>
               </select>
             </div>
             
-            <span className="text-xs text-zinc-500 hidden md:inline-block">
-              Showing {sortedAndFilteredOpenings.length} of {openings.length}
+            <span className="text-xs text-muted hidden md:inline-block">
+              {sortedAndFilteredOpenings.length} of {openings.length} available
             </span>
           </div>
 
           {/* Search Box */}
           <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-muted absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search openings, ECO codes, themes..."
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/70 shadow-inner"
+              className="w-full bg-paper-2 border border-rule rounded pl-9 pr-3 py-1.5 text-xs text-ink placeholder-muted focus:outline-none focus:border-accent"
             />
           </div>
         </div>
       </div>
 
-      {/* ========================================================
-          OPENINGS CARDS DISPLAY (Grouped by Level or Unified Grid)
-          ======================================================== */}
+      {/* OPENINGS CARDS DISPLAY */}
       {groupedByLevel ? (
         <div className="space-y-10">
           {groupedByLevel.map((group) => (
             <div key={group.level}>
               {/* Group Section Header */}
-              <div className="flex items-center gap-3 mb-4 pb-2 border-b border-zinc-800/80">
+              <div className="flex items-center gap-3 mb-4 pb-2 border-b border-rule">
                 <div
-                  className={`w-3 h-3 rounded-full ${
+                  className={`w-2.5 h-2.5 rounded-full ${
                     group.level === 'beginner'
-                      ? 'bg-emerald-400 shadow-md shadow-emerald-500/50'
+                      ? 'bg-ok'
                       : group.level === 'intermediate'
-                      ? 'bg-amber-400 shadow-md shadow-amber-500/50'
-                      : 'bg-purple-400 shadow-md shadow-purple-500/50'
+                      ? 'bg-accent'
+                      : 'bg-cool'
                   }`}
                 />
-                <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                <h2 className="text-base font-semibold text-ink tracking-tight flex items-center gap-2">
                   <span>{group.title}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 font-mono font-normal">
+                  <span className="text-xs px-1.5 py-0.2 rounded border border-rule bg-paper-3 text-muted font-mono">
                     {group.items.length}
                   </span>
                 </h2>
-                <span className="hidden sm:inline-block text-xs text-zinc-400 ml-2">
-                  — {group.subtitle}
+                <span className="hidden sm:inline-block text-xs text-muted ml-1">
+                  : {group.subtitle}
                 </span>
               </div>
 
-              {/* Cards Grid for this Level */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {/* Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {group.items.map(renderCard)}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sortedAndFilteredOpenings.map(renderCard)}
         </div>
       )}
 
       {/* Empty State */}
       {sortedAndFilteredOpenings.length === 0 && (
-        <div className="py-16 text-center text-zinc-500 text-sm bg-zinc-900/30 rounded-2xl border border-zinc-850">
+        <div className="py-16 text-center text-muted text-xs bg-paper-2 rounded border border-rule">
           No openings or gambits found matching &ldquo;{searchQuery}&rdquo;.
         </div>
       )}

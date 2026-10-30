@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sac - Master Chess Openings & Gambits",
+  title: "Sac : Chess Openings & Gambits Trainer",
   description: "Interactive chess trainer to master openings, gambits, and tactical sacrifices through active recall.",
   icons: {
     icon: [
@@ -26,13 +26,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-clip`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-paper text-ink overflow-x-clip">{children}</body>
     </html>
   );
 }

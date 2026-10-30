@@ -1,53 +1,64 @@
 import OpeningCatalog from '../components/OpeningCatalog';
 import { OPENINGS_DATA } from '../data/openings';
-import { Swords, Flame, Sparkles } from 'lucide-react';
+import { Swords } from 'lucide-react';
 
 export default function Home() {
+  const totalVariations = OPENINGS_DATA.reduce((acc, o) => acc + o.variations.length, 0);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
-      {/* Top Navigation */}
-      <header className="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-paper text-ink flex flex-col font-sans">
+      {/* Navigation */}
+      <header className="border-b border-rule bg-paper-2 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-900/40">
-              <Swords className="w-5 h-5 text-zinc-950 stroke-[2.5]" />
+            <div className="w-8 h-8 rounded border border-rule bg-paper-3 flex items-center justify-center">
+              <Swords className="w-4 h-4 text-ink stroke-[2.2]" />
             </div>
-            <div>
-              <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+            <div className="flex items-baseline gap-2">
+              <span className="font-semibold text-base tracking-tight text-ink">
                 Sac
               </span>
-              <span className="hidden sm:inline-block ml-2 text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                Chess Openings & Gambits
+              <span className="hidden sm:inline-block text-xs text-muted">
+                Chess openings and gambits
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-medium text-zinc-400">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-800/80 border border-zinc-700/50">
-              <Flame className="w-3.5 h-3.5 text-rose-400" />
-              <span>Sacrifice Theory</span>
-            </div>
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-800/80 border border-zinc-700/50">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Spaced Practice</span>
-            </div>
+          <div className="flex items-center gap-3 text-xs text-muted">
+            <span><span className="font-mono text-ink">{OPENINGS_DATA.length}</span> openings</span>
+            <span className="text-rule">/</span>
+            <span><span className="font-mono text-ink">{totalVariations}</span> lines</span>
           </div>
         </div>
       </header>
 
-      {/* Main Content Area: Openings & Gambits Catalog Explorer */}
-      <main className="flex-1">
+      {/* Hero section */}
+      <section className="border-b border-rule bg-paper">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="max-w-3xl">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">
+              Master chess openings through tactical lines
+            </h1>
+            <p className="mt-2 text-sm text-muted leading-relaxed">
+              Study classical systems and gambits with master continuations and tactical breakdowns.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Catalog */}
+      <main className="flex-1 bg-paper">
         <OpeningCatalog openings={OPENINGS_DATA} />
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-900 bg-zinc-950/80 py-6 text-center text-xs text-zinc-400">
+      <footer className="border-t border-rule bg-paper-2 py-6 text-xs text-muted">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>
-            <span className="font-semibold text-zinc-300">Sac</span> — Master chess openings and gambits through interactive muscle memory.
+            <span className="font-medium text-ink">Sac</span>: Interactive chess opening trainer with complete move trees.
           </p>
-          <div className="flex items-center gap-4 text-zinc-400">
-            <span>Select any opening or gambit to launch the interactive trainer</span>
+          <div className="flex items-center gap-4 text-muted">
+            <span>Select an opening to begin line practice</span>
           </div>
         </div>
       </footer>
