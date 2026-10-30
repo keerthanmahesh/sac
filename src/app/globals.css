@@ -1,45 +1,53 @@
-/* Hallmark · theme: Console · genre: modern-minimal · posture: restrained */
+/* Hallmark · theme: Editorial Chess Quarterly · genre: editorial · posture: rigorous */
 
 @import "tailwindcss";
 
 :root {
-  /* Surfaces */
-  --color-paper: oklch(17% 0.008 250);
-  --color-paper-2: oklch(21% 0.009 250);
-  --color-paper-3: oklch(13.5% 0.007 250);
+  /* Surfaces (Archival Eggshell & Linen) */
+  --color-paper: #fcf9f2;
+  --color-paper-2: #f6f3ec;
+  --color-paper-3: #f0eee7;
+  --color-paper-high: #ebe8e1;
+  --color-paper-highest: #e5e2db;
+  --color-paper-lowest: #faf8f4;
 
-  /* Inks */
-  --color-ink: oklch(95% 0.005 250);
-  --color-ink-2: oklch(83% 0.008 250);
-  --color-muted: oklch(71% 0.01 250);
+  /* Inks (Printer Carbon Obsidian) */
+  --color-ink: #1c1c18;
+  --color-ink-2: #414844;
+  --color-muted: #717973;
 
-  /* Rules & Hairlines */
-  --color-rule: oklch(31% 0.01 250);
-  --color-rule-2: oklch(42% 0.012 250);
+  /* Rules & Hairlines (Bookbinding Strata) */
+  --color-rule: #c1c8c2;
+  --color-rule-2: #717973;
+  --color-rule-fine: #e5dfd5;
 
-  /* Functional Signals */
-  --color-accent: oklch(82% 0.15 80);
-  --color-accent-ink: oklch(18% 0.04 75);
-  --color-accent-soft: oklch(29% 0.05 80);
-  --color-focus: oklch(82% 0.15 80);
+  /* Editorial Accents */
+  --color-primary: #012d1d;
+  --color-primary-container: #1b4332;
+  --color-secondary: #994535;
 
-  --color-cool: oklch(77% 0.12 245);
-  --color-cool-soft: oklch(29% 0.05 245);
+  --color-accent: #1b4332;
+  --color-accent-ink: #faf8f4;
+  --color-accent-soft: #e6efe9;
+  --color-focus: #1b4332;
 
-  --color-ok: oklch(76% 0.15 150);
-  --color-ok-soft: oklch(24.5% 0.03 150);
+  --color-cool: #262626;
+  --color-cool-soft: #e4e2e1;
 
-  --color-bad: oklch(70% 0.17 25);
-  --color-bad-soft: oklch(24.5% 0.035 25);
+  --color-ok: #012d1d;
+  --color-ok-soft: #c1ecd4;
+
+  --color-bad: #994535;
+  --color-bad-soft: #ffdad3;
 
   /* Typography */
-  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-newsreader), "Newsreader", Georgia, serif;
+  --font-body: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
 
-  /* Geometry & Rhythm */
-  --radius-card: 8px;
-  --radius-control: 6px;
+  /* Geometry & Rhythm (Sharp Architectural Edge) */
+  --radius-card: 0px;
+  --radius-control: 0px;
   --rule-hair: 1px;
 
   /* Spacing Scale */
@@ -57,11 +65,18 @@
   --color-paper: var(--color-paper);
   --color-paper-2: var(--color-paper-2);
   --color-paper-3: var(--color-paper-3);
+  --color-paper-high: var(--color-paper-high);
+  --color-paper-highest: var(--color-paper-highest);
+  --color-paper-lowest: var(--color-paper-lowest);
   --color-ink: var(--color-ink);
   --color-ink-2: var(--color-ink-2);
   --color-muted: var(--color-muted);
   --color-rule: var(--color-rule);
   --color-rule-2: var(--color-rule-2);
+  --color-rule-fine: var(--color-rule-fine);
+  --color-primary: var(--color-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-secondary: var(--color-secondary);
   --color-accent: var(--color-accent);
   --color-accent-ink: var(--color-accent-ink);
   --color-accent-soft: var(--color-accent-soft);
@@ -73,6 +88,7 @@
   --color-bad: var(--color-bad);
   --color-bad-soft: var(--color-bad-soft);
 
+  --font-serif: var(--font-serif);
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono);
 }
@@ -80,37 +96,39 @@
 html,
 body {
   overflow-x: clip;
-  width: 100%;
   background-color: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
-  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Base Interactive Focus & Active States */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
+/* Instant, unblurred focus ring on all interactive elements */
+:focus-visible {
   outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline-offset: 1px;
 }
 
-button:active,
-a:active {
+/* Subtle micro-press response */
+a:active,
+button:active {
   transform: translateY(1px);
 }
 
+/* Editorial selection */
 ::selection {
-  background-color: var(--color-accent-soft);
-  color: var(--color-ink);
+  background-color: var(--color-primary-container);
+  color: var(--color-accent-ink);
 }
 
+/* Scrollbars */
 * {
-  scrollbar-color: var(--color-rule) var(--color-paper-3);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) var(--color-paper);
 }
 
-/* Reduced Motion Fallback */
+/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -120,20 +138,4 @@ a:active {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  20%, 60% {
-    transform: translateX(-6px);
-  }
-  40%, 80% {
-    transform: translateX(6px);
-  }
-}
-
-.animate-shake {
-  animation: shake 0.35s ease-out;
 }
